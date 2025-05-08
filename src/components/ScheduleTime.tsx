@@ -3,14 +3,17 @@ import { Button } from "./ui/button";
 
 export const DaysOfTheWeek = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'];
 
-const ScheduleTime = ({onUpdate}) => {
+const ScheduleTime = ({onUpdate,initialDays=95 , initialTime='' }:{onUpdate:any,initialDays:number,initialTime:string}) => {
 
-    const [time, selectTime] = useState();
-    const handleTimeChange = (e) => {
-        console.log(e.target.value)
+
+    // console.log()
+
+    const [time, selectTime] = useState(initialTime);
+    const handleTimeChange = (e:any) => {
         selectTime(e.target.value);
-    };
-    const [selectedDays, setSelectedDays] = useState<number>(0);
+    }
+    const [selectedDays, setSelectedDays] = useState<number>(initialDays);
+
 
     useEffect(() => {
         if (onUpdate) {
@@ -19,6 +22,7 @@ const ScheduleTime = ({onUpdate}) => {
             }
           
         }
+
       }, [selectedDays, time, onUpdate])
 
     const toggleDay = (dayIndex: number) => {
@@ -30,6 +34,11 @@ const ScheduleTime = ({onUpdate}) => {
     const isDaySelected = (dayIndex: number) => {
         return (selectedDays & (1 << dayIndex)) !== 0;
     };
+
+
+    // setSelectedDays(Number(current.split(',')[0]))
+    // selectTime(current.split(',')[1])
+
 
     return (
         <div className="flex items-center justify-between gap-1">

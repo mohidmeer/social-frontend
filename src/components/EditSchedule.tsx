@@ -2,19 +2,16 @@ import { useForm } from "react-hook-form";
 import { useEffect, useState } from "react";
 import { Button } from "../components/ui/button";
 import { apiService } from "../api/client";
-import { HoverCard, HoverCardContent, HoverCardTrigger } from "./ui/hover-card";
-import { toast } from "react-toastify";
-import { Eye, EyeOff } from "lucide-react";
+import ScheduleTime from "./ScheduleTime";
 
 const EditScheduleForm = ({ schedule }: { schedule?: any }) => {
 
-
-  const [type, setType] = useState('password')
   const {
     register,
     handleSubmit,
     reset,
     setValue,
+    getValues,
     formState: { errors },
   } = useForm();
 
@@ -35,6 +32,21 @@ const EditScheduleForm = ({ schedule }: { schedule?: any }) => {
     }
   };
 
+  const schedulev = getValues("schedule");
+
+  const [initialDays, setInitialDays] = useState<number | null>(null);
+  const [initialTime, setInitialTime] = useState<string | null>(null);
+
+
+  useEffect(() => {
+  if (schedule) {
+    reset(schedule);
+
+    const [days, time] = schedule.schedule?.split(",") || [];
+    setInitialDays(Number(days));
+    setInitialTime(time);
+  }
+}, [schedulev, reset]);
 
 
 
@@ -50,7 +62,7 @@ const EditScheduleForm = ({ schedule }: { schedule?: any }) => {
           <div className="flex flex-col gap-1 w-full">
             <label className="text-xs font-semibold">Title</label>
             <input
-            data-error={errors.title && true}
+              data-error={errors.title && true}
               className="input w-full input-sm"
               type="text"
               placeholder="Schedule Title (for your reference)"
@@ -72,27 +84,20 @@ const EditScheduleForm = ({ schedule }: { schedule?: any }) => {
             {errors.instructions && <p className="text-xs text-red-500">{errors.instructions.message as string}</p>}
           </div>
 
-     
-       
+          {
+            initialDays && 
+            <ScheduleTime initialDays={initialDays} initialTime={initialTime || ''} onUpdate={(v: any) => {
+              setValue('schedule', v)
+            }} />
+          }
+          <input type="hidden" {...register("schedule", { required: "Please choose both the schedule days and time to proceed." })} />
+          {errors.schedule && (
+            <p className="text-xs mt-1 font-semibold text-red-500">
+              {errors.schedule.message as string}
+            </p>
+          )}
 
-          {/* Schedule */}
-          <div className="flex flex-col gap-1 w-full">
-            <label className="text-xs font-semibold">Schedule</label>
-            <select className="input w-full input-sm" {...register("schedule")}>
-              {
-                import.meta.env.VITE_ENV == 'dev' &&
-                <option value="minute">Minute</option>
-              }
-              <option value="daily">Daily</option>
-              <option value="weekly">Weekly</option>
-            </select>
-          </div>
 
-       
-
-  
-
-       
 
           {/* Submit */}
           <div className="flex flex-col gap-1 mt-1">

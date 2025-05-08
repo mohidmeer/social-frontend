@@ -190,7 +190,7 @@ export const apiService = {
             } else {
                 throw new Error("Invalid API response format.");
             }
-        } catch (error) {
+        } catch (error:any) {
             console.error(error);
             throw new Error(error.response?.data?.message || "Failed to connect socail account");
             

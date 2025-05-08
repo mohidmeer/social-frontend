@@ -1,4 +1,4 @@
-import { Coins, Edit, Facebook, FacebookIcon, Globe, LogOut, Pause, Play, Plus, Timer, Trash, Workflow } from "lucide-react"
+import { Coins, Edit, LogOut, Pause, Play, Plus, Timer, Trash, Workflow } from "lucide-react"
 import { Button } from "../components/ui/button"
 import { useNavigate } from "react-router-dom";
 import { cronToHumanReadable, getUsername } from "../lib/utils";

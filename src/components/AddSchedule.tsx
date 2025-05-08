@@ -4,15 +4,32 @@ import { Button } from "../components/ui/button";
 import { apiService } from "../api/client";
 import { toast } from "react-toastify";
 import Modal from "./Modal";
-import { Facebook, Instagram, Twitter } from "lucide-react";
+import { Facebook } from "lucide-react";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "./ui/select";
 import ScheduleTime from "./ScheduleTime";
 
 
+type SocialAccount = {
+    _id: string;
+    name: string;
+    platform:string;
+    pages:any;
+    avatar_url:string;
+  };
+
+  type page = {
+    name: string,
+    picture:any,
+    id:string,
+    access_token:any;
+}
+
 const AddScheduleForm = () => {
 
-    const [accounts, setAccounts] = useState([])
-    const [pages, setPages] = useState([])
+   
+
+    const [accounts, setAccounts] = useState<SocialAccount[]>([])
+    const [pages, setPages] = useState<page[]>([])
 
     useEffect(() => {
         (async () => {
@@ -206,7 +223,7 @@ const AddScheduleForm = () => {
                             )}
                         </div>
                     }
-                    <ScheduleTime onUpdate={(v) => {
+                    <ScheduleTime initialDays={95} initialTime=""  onUpdate={(v:any) => {
                         setValue('schedule', v)   
                     }} />
                     <input type="hidden" {...register("schedule", { required: "Please choose both the schedule days and time to proceed." })} />
