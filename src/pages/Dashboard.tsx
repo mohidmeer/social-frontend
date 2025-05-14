@@ -135,7 +135,7 @@ export default Dashboard
 function Schedule({ setActiveScheduleCount }: { setActiveScheduleCount: any }) {
     type page = {
         name: string,
-        picture:string
+        picture: string
     }
     interface Schedule {
         _id: string;
@@ -147,6 +147,7 @@ function Schedule({ setActiveScheduleCount }: { setActiveScheduleCount: any }) {
         active: boolean;
         platform: string;
         page: page;
+        social_account_id : any;
         last_run: {
             time: string | null;
             message: string | null;
@@ -221,11 +222,18 @@ function Schedule({ setActiveScheduleCount }: { setActiveScheduleCount: any }) {
                                         case 'facebook':
                                             return <div className="flex items-center gap-2">
                                                 <div className="size-8   items-center justify-center flex ">
-                                                <img src={item.page.picture} className="size-6 rounded-full" />
-                                                    {/* <Facebook className=" text-white " />*/}
-                                                    
+                                                    <img src={item.page.picture} className="size-6 rounded-full" />
                                                 </div>
                                                 <p className="font-bold text-sm">{item.page.name}</p>
+                                            </div>
+                                        case 'instagram':
+                                            return <div className="flex items-center gap-2">
+                                                <div className="size-8   items-center justify-center flex ">
+                                                    <img src={item.social_account_id.avatar_url} className="size-6 rounded-full" />
+
+
+                                                </div>
+                                                <p className="font-bold text-sm">{item.social_account_id.name}</p>
                                             </div>
                                         default:
                                             return <span>Unknown Platform</span>;

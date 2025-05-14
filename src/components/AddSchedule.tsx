@@ -4,10 +4,9 @@ import { Button } from "../components/ui/button";
 import { apiService } from "../api/client";
 import { toast } from "react-toastify";
 import Modal from "./Modal";
-import { Facebook } from "lucide-react";
+import { Facebook, Instagram } from "lucide-react";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "./ui/select";
 import ScheduleTime from "./ScheduleTime";
-
 
 type SocialAccount = {
     _id: string;
@@ -161,9 +160,12 @@ const AddScheduleForm = () => {
                                     <SelectContent>
                                         {
                                             accounts.length > 0 && accounts.map((i, z) => (
-                                                <SelectItem className="flex gap-2 items-center" key={i._id} value={z.toString()}>
+                                                <SelectItem className="flex  items-center gap-4  border" key={i._id} value={z.toString()}>
+                                                    <div className="flex gap-2 items-center">
                                                     <img src={i.avatar_url} className="size-6 rounded-full" />
                                                     {i.name}
+                                                    </div>
+                                                    <span className="font-bold text-xs text-gray-600">{i.platform}</span>
                                                 </SelectItem>
                                             ))
                                         }
@@ -223,6 +225,8 @@ const AddScheduleForm = () => {
                             )}
                         </div>
                     }
+
+
                     <ScheduleTime initialDays={95} initialTime=""  onUpdate={(v:any) => {
                         setValue('schedule', v)   
                     }} />
@@ -232,11 +236,6 @@ const AddScheduleForm = () => {
                             {errors.schedule.message as string}
                         </p>
                     )}
-
-
-
-
-
 
                     {/* Submit Button */}
                     <div className="flex flex-col gap-1 mt-4">
@@ -269,16 +268,15 @@ function AddSocialAccounts() {
                 Connect with facebook
             </Button>
             {/* An Instagram business or creator account linked to a Facebook Page. */}
-            {/* <Button type="button">
+             <Button type="button" onClick={()=>{connectSocial('instagram')}}>
                 <Instagram />
                 Connect with Instagram
             </Button>
 
-            <Button type="button">
+            {/* <Button type="button">
                 <Twitter />
                 Connect with Twitter
-            </Button> */}
-
+            </Button>  */}
         </div>
     )
 }
