@@ -7,6 +7,7 @@ import Modal from "./Modal";
 import { Facebook, Instagram } from "lucide-react";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "./ui/select";
 import ScheduleTime from "./ScheduleTime";
+import AddSocialAccounts from "./AddSocialAccounts";
 
 type SocialAccount = {
     _id: string;
@@ -252,31 +253,3 @@ const AddScheduleForm = () => {
 export default AddScheduleForm;
 
 
-function AddSocialAccounts() {
-
-
-    async function connectSocial(provider:string){
-        const callback_url =  window.location.href
-        const res  = await apiService.SocailConnect(provider,callback_url)
-        window.location.href=res 
-    }
-
-    return (
-        <div className="flex flex-col gap-2">
-            <Button type="button" onClick={()=>{connectSocial('facebook')}} >
-                <Facebook />
-                Connect with facebook
-            </Button>
-            {/* An Instagram business or creator account linked to a Facebook Page. */}
-             <Button type="button" onClick={()=>{connectSocial('instagram')}}>
-                <Instagram />
-                Connect with Instagram
-            </Button>
-
-            {/* <Button type="button">
-                <Twitter />
-                Connect with Twitter
-            </Button>  */}
-        </div>
-    )
-}

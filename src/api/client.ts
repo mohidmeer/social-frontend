@@ -182,7 +182,7 @@ export const apiService = {
     },
     async SocailConnect(provider:string,callback_url:string){
         try {
-            const response = await axiosClient.get(`/connect/${provider}?callback_url=${callback_url}`);
+            const response = await axiosClient.get(`/socials/connect/${provider}?callback_url=${callback_url}`);
 
             console.log(response)
             if (response.data.success) {
@@ -195,16 +195,28 @@ export const apiService = {
             throw new Error(error.response?.data?.message || "Failed to connect socail account");
             
         }
-
+    } , 
+    async DeleteSocialAccount(id:string){
+        try {
+            const response = await axiosClient.delete(`/socials/${id}`);
+            if (response.data) {
+                return true;
+            } else {
+                throw new Error("Invalid API response format.");
+            }
+        } catch (error:any) {
+            console.error(error);
+            throw new Error(error.response?.data?.message || "Failed to connect socail account");
+            
+        }
     }
 }
 
 
-// Define the Schedule type
 interface Schedule {
-    _id: string; // Ensure _id is included
-    title: string;
-    schedule: string; // e.g., "daily"
-    time: string; // e.g., "8:00 AM"
-    active: boolean; // e.g., true/false
+    _id: string; 
+    title: string; 
+    schedule: string; 
+    time: string;
+    active: boolean;
 }

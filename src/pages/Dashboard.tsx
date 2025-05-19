@@ -15,6 +15,7 @@ import {
     HoverCardTrigger,
 } from "../components/ui/hover-card"
 import Logo from "../components/Logo";
+import SocialMediaAccounts from "../components/SocialMediaAccounts";
 
 const Dashboard = () => {
     const navigate = useNavigate()
@@ -99,19 +100,21 @@ const Dashboard = () => {
                         {/* Active Schedules */}
                         <div className="bg-primary text-white p-6 rounded-lg text-center">
                             <p className="text-2xl font-bold">{activeSchedulesCount}</p>
-                            <p className="text-sm">Active Schedules</p>
+                            <p className="text-sm font-semibold">Active Schedules</p>
                         </div>
 
-                        {/* Total Posts */}
-                        <div className="bg-primary text-white p-6 rounded-lg text-center">
-                            <p className="text-2xl font-bold">102</p>
-                            <p className="text-sm">Total Posts</p>
-                        </div>
+            
 
+                        <Modal id="social-id" title="Social Media Accounts" content={<SocialMediaAccounts />}>
+                            <div className="bg-primary text-white p-6 rounded-lg flex flex-col items-center justify-center">
+                                <Plus className="size-8 border-white rounded-md p-1 " />
+                                <p className="text-sm mt-2 font-semibold">Social Accounts</p>
+                            </div>
+                        </Modal>
                         <Modal id="blog-id" title="Add Post Schedule" content={<AddScheduleForm />}>
                             <div className="bg-primary text-white p-6 rounded-lg flex flex-col items-center justify-center">
                                 <Plus className="size-8 border-white rounded-md p-1" />
-                                <p className="text-sm mt-2">Add schedule</p>
+                                <p className="text-sm mt-2 font-semibold">Add schedule</p>
                             </div>
                         </Modal>
                     </div>
