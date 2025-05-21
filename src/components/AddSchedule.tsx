@@ -4,7 +4,7 @@ import { Button } from "../components/ui/button";
 import { apiService } from "../api/client";
 import { toast } from "react-toastify";
 import Modal from "./Modal";
-import { Facebook, Instagram } from "lucide-react";
+// import { Facebook, Instagram } from "lucide-react";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "./ui/select";
 import ScheduleTime from "./ScheduleTime";
 import AddSocialAccounts from "./AddSocialAccounts";
