@@ -45,7 +45,7 @@ const Dashboard = () => {
 
 
     const handleLogout = () => {
-        localStorage.removeItem("blogger-api-auth-token");
+        localStorage.removeItem("social-api-auth-token");
         navigate("/auth/login");
     };
     return (

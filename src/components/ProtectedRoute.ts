@@ -13,11 +13,11 @@ const isTokenExpired = (token:string) => {
 
 const ProtectedRoute = ({ children }: { children: React.ReactNode }) => {
     const navigate = useNavigate();
-    const authToken = localStorage.getItem("blogger-api-auth-token");
+    const authToken = localStorage.getItem("social-api-auth-token");
   
     useEffect(() => {
       if (!authToken || isTokenExpired(authToken)) {
-        localStorage.removeItem("blogger-api-auth-token"); 
+        localStorage.removeItem("social-api-auth-token"); 
         navigate("/auth/login", { replace: true });
       }
     }, [authToken, navigate]); // Run only when authToken or navigate changes

@@ -6,7 +6,8 @@
   "scripts": {
     "dev": "vite",
     "build:staging": "tsc -b && vite build --mode staging && npm run zip stag",
-    "build": "tsc -b && vite build && npm run zip prod",
+    "build": "tsc -b && vite build",
+    "build:plugin": "tsc -b && vite build && npm run zip prod",
     "lint": "eslint .",
     "preview": "vite preview",
     "zip": "node build.cjs"

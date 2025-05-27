@@ -11,7 +11,7 @@ const Login: React.FC = () => {
     const navigate = useNavigate();
 
     useEffect(() => {
-        const authToken = localStorage.getItem("blogger-api-auth-token");
+        const authToken = localStorage.getItem("social-api-auth-token");
         console.log(authToken)
         if (authToken) {
             navigate('/dashboard'); 
@@ -25,7 +25,7 @@ const Login: React.FC = () => {
         const res = await apiService.Login(data)
         if (res.success) {
             toast.update(tid, { render: "Redirecting ..", type: "success", isLoading: false, autoClose: 500 });
-            localStorage.setItem("blogger-api-auth-token", res.token);
+            localStorage.setItem("social-api-auth-token", res.token);
             navigate('/dashboard')
         } else {
             toast.update(tid, { render: res.message, type: "error", isLoading: false, autoClose: 1000 });

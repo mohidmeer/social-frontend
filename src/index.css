@@ -1,5 +1,4 @@
-
-@import "tailwindcss" important ;
+@import "tailwindcss" important;
 
 
 @plugin "tailwindcss-animate";
@@ -119,7 +118,7 @@
 
 @layer base {
 
-  #auto-blogger {
+  /* #auto-blogger {
     all: initial !important;
     font-family: inherit !important;
     line-height: normal !important;
@@ -136,39 +135,36 @@
     margin: 0 !important;
     padding: 0 !important;
     
+  } */
+
+
+  .modals>h1,
+  .modals>h2,
+  .modals>p {
+    margin: 0 !important;
   }
 
-  
- .modals > h1,h2,p {
-  margin: 0 !important;
- }
-
-
-  
 
   * {
     @apply border-border outline-ring/50;
   }
+
   body {
     @apply bg-background text-foreground;
   }
-  
+
   .input {
 
-    @apply bg-white border border-border text-foreground font-semibold py-2 px-4 rounded-md shadow-sm  focus:ring-2 focus:ring-primary focus:outline-none outline-0
+    @apply bg-white border border-border text-foreground font-semibold py-2 px-4 rounded-md shadow-sm focus:ring-2 focus:ring-primary focus:outline-none outline-0
   }
 
-  .input-sm{
-    @apply !py-1 !px-2 !text-sm  !shadow-none
+  .input-sm {
+    @apply !py-1 !px-2 !text-sm !shadow-none
   }
-  
- 
-  
+
 }
-
 
 
 [data-error="true"] {
   @apply !ring-red-400 !ring-2
 }
-

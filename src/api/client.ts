@@ -10,7 +10,7 @@ const axiosClient = axios.create({
 
 axiosClient.interceptors.request.use(
     (config) => {
-        const token = localStorage.getItem("blogger-api-auth-token");
+        const token = localStorage.getItem("social-api-auth-token");
 
         if (token) {
             config.headers['Authorization'] = `Bearer ${token}`;

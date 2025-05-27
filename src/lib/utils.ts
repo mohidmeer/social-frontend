@@ -8,7 +8,7 @@ export function cn(...inputs: ClassValue[]) {
 
 export function getUsername(){
 
-  const token = localStorage.getItem("blogger-api-auth-token")
+  const token = localStorage.getItem("social-api-auth-token")
 
   return JSON.parse(atob(token!.split(".")[1])).username; // Decode JWT payload
 
