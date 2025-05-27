@@ -70,7 +70,15 @@ const AddScheduleForm = () => {
     const onSubmit = async (data: any) => {
 
         const tid = toast.loading("Saving ....")
-        console.log(data);
+
+        const time = data.schedule.split(',')[1];
+
+        console.log(time)
+
+
+
+
+        return ; 
 
             setLoading(true);
 

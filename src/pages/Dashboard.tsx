@@ -1,7 +1,7 @@
 import { Coins, Edit, LogOut, Pause, Play, Plus, Timer, Trash, Workflow } from "lucide-react"
 import { Button } from "../components/ui/button"
 import { useNavigate } from "react-router-dom";
-import { cronToHumanReadable, getUsername } from "../lib/utils";
+import {  getUsername, utcToLocalTime } from "../lib/utils";
 import { apiService } from "../api/client";
 import Modal from "../components/Modal";
 import AddCredits from "../components/AddCredits";
@@ -32,7 +32,7 @@ const Dashboard = () => {
             } catch (error: any) {
                 setCreditError(error.message || "An error occurred while fetching credits.");
             } finally {
-                setLoadingCredits(false); // Stop loading
+                setLoadingCredits(false);
             }
         };
 
@@ -50,7 +50,7 @@ const Dashboard = () => {
     };
     return (
         <div className="p-10 ">
-            <div className="max-w-6xl mx-auto shadow-2xl p-4 border rounded-md">
+            <div className="max-w-6xl mx-auto shadow-xl p-4 border rounded-md">
                 <div className="flex justify-between items-center border-b pb-1">
                     <Logo size={200} />
                     {/* <div className="flex items-center gap-1 font-bold">
@@ -72,7 +72,7 @@ const Dashboard = () => {
                                 <span className="text-red-500">{creditError}</span>
                             ) : (
                                 <>
-                                    <span>{credits ?? 0}</span> {/* Display credits or 0 if undefined */}
+                                    <span>{credits ?? 0}</span> 
                                 </>
                             )}
                             <Coins />
@@ -215,7 +215,7 @@ function Schedule({ setActiveScheduleCount }: { setActiveScheduleCount: any }) {
                         <p className="font-bold  p-0 line-clamp-2">{item.title}</p>
                         <div className="gap-1 text-sm font-bold text-gray-500 mt-2 flex items-center">
                             <Timer size={20} className="flex-shrink-0" />
-                            <p>{cronToHumanReadable(item.schedule)}</p>
+                            <p>{utcToLocalTime(item.schedule.split(',')[1])}</p>
 
                         </div>
                         <div className="mt-2 flex items-center justify-between">

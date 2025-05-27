@@ -14,8 +14,7 @@ const Login: React.FC = () => {
         const authToken = localStorage.getItem("social-api-auth-token");
         console.log(authToken)
         if (authToken) {
-            navigate('/dashboard'); 
-            window.location.hash = '#/dashboard';
+            navigate('/dashboard');
         }
     }, [navigate]);
     const { register, handleSubmit, formState: { errors } } = useForm();

@@ -1,12 +1,11 @@
 import { useEffect, useState } from "react";
 import { Button } from "./ui/button";
+import { localTimeToUtc } from "../lib/utils";
 
 export const DaysOfTheWeek = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'];
 
 const ScheduleTime = ({onUpdate,initialDays=95 , initialTime='' }:{onUpdate:any,initialDays:number,initialTime:string}) => {
 
-
-    // console.log()
 
     const [time, selectTime] = useState(initialTime);
     const handleTimeChange = (e:any) => {
@@ -18,7 +17,7 @@ const ScheduleTime = ({onUpdate,initialDays=95 , initialTime='' }:{onUpdate:any,
     useEffect(() => {
         if (onUpdate) {
             if(time && selectedDays && selectedDays > 0){
-                onUpdate(selectedDays + ',' +time);
+                onUpdate(selectedDays + ',' +localTimeToUtc(time));
             }
           
         }
@@ -36,12 +35,10 @@ const ScheduleTime = ({onUpdate,initialDays=95 , initialTime='' }:{onUpdate:any,
     };
 
 
-    // setSelectedDays(Number(current.split(',')[0]))
-    // selectTime(current.split(',')[1])
 
 
     return (
-        <div className="flex items-center justify-between gap-1">
+        <div className="flex items-center justify-between ">
             <div className="flex flex-col gap-1">
                 <label className="text-xs font-semibold">Select Schedule</label>
                 <div className="flex gap-1">
@@ -50,7 +47,7 @@ const ScheduleTime = ({onUpdate,initialDays=95 , initialTime='' }:{onUpdate:any,
                             variant={'outline'}
                             type="button"
                             key={index}
-                            className={`px-2 rounded-md text-xs ${isDaySelected(index) ? "bg-primary hover:bg-primary/90 hover:text-white text-white" : ""}`}
+                            className={`px-2 rounded-md text-xs py-5 ${isDaySelected(index) ? "bg-primary hover:bg-primary/90 hover:text-white text-white" : ""}`}
                             onClick={() => toggleDay(index)}
                         >
                             {day}
@@ -59,7 +56,7 @@ const ScheduleTime = ({onUpdate,initialDays=95 , initialTime='' }:{onUpdate:any,
                 </div>
             </div>
             <div className="flex flex-col gap-1">
-                <label className="text-xs font-semibold">Select Time</label>
+                <label className="text-xs font-semibold">Select Time ({ Intl.DateTimeFormat().resolvedOptions().timeZone }) </label>
                 <div className="flex gap-1">
                     <input type="time" className="input border"
                      value={time} 
