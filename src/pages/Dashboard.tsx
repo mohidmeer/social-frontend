@@ -1,7 +1,7 @@
 import { Coins, Edit, LogOut, Pause, Play, Plus, Timer, Trash, Workflow } from "lucide-react"
 import { Button } from "../components/ui/button"
 import { useNavigate } from "react-router-dom";
-import {  getUsername, utcToLocalTime } from "../lib/utils";
+import { getUsername, utcToLocalTime } from "../lib/utils";
 import { apiService } from "../api/client";
 import Modal from "../components/Modal";
 import AddCredits from "../components/AddCredits";
@@ -72,7 +72,7 @@ const Dashboard = () => {
                                 <span className="text-red-500">{creditError}</span>
                             ) : (
                                 <>
-                                    <span>{credits ?? 0}</span> 
+                                    <span>{credits ?? 0}</span>
                                 </>
                             )}
                             <Coins />
@@ -103,7 +103,7 @@ const Dashboard = () => {
                             <p className="text-sm font-semibold">Active Schedules</p>
                         </div>
 
-            
+
 
                         <Modal id="social-id" title="Social Media Accounts" content={<SocialMediaAccounts />}>
                             <div className="bg-primary text-white p-6 rounded-lg flex flex-col items-center justify-center">
@@ -150,7 +150,7 @@ function Schedule({ setActiveScheduleCount }: { setActiveScheduleCount: any }) {
         active: boolean;
         platform: string;
         page: page;
-        social_account_id : any;
+        social_account_id: any;
         last_run: {
             time: string | null;
             message: string | null;
@@ -275,6 +275,15 @@ function Schedule({ setActiveScheduleCount }: { setActiveScheduleCount: any }) {
                     </div>
                 </div>
             ))}
+
+            {
+                !loadingSchedules && schedules.length === 0 &&
+                <div className="col-span-full flex items-center justify-center border-dashed border-2 text-lg font-bold text-foreground/80 rounded-md h-[80px]">
+                    <Modal id="blog-id" title="Add Post Schedule" content={<AddScheduleForm />}>
+                        <p>📅 Nothing here yet. Ready to create your first schedule?</p>
+                    </Modal>
+                </div>
+            }
         </div>
     )
 }
