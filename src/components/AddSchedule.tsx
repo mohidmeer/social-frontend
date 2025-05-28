@@ -71,15 +71,6 @@ const AddScheduleForm = () => {
 
         const tid = toast.loading("Saving ....")
 
-        const time = data.schedule.split(',')[1];
-
-        console.log(time)
-
-
-
-
-        return ; 
-
             setLoading(true);
 
             try {
