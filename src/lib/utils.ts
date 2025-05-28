@@ -16,34 +16,18 @@ export function getUsername() {
 
 
 
-
-
-export function localTimeToUTC(timeStr:string) {
-  const [hours, minutes] = timeStr.split(':').map(Number);
+export function localTimeToUtc(localtimeStr: string) {
+  const [hours, minutes] = localtimeStr.split(':').map(Number);
   const now = new Date();
   now.setHours(hours);
   now.setMinutes(minutes);
   now.setSeconds(0);
   now.setMilliseconds(0);
+
   const utcHours = now.getUTCHours().toString().padStart(2, '0');
   const utcMinutes = now.getUTCMinutes().toString().padStart(2, '0');
 
   return `${utcHours}:${utcMinutes}`;
-
-}
-
-export function localTimeToUtc(utcTimeStr: string) {
-  const [hours, minutes] = utcTimeStr.split(':').map(Number);
-  const now = new Date();
-  now.setUTCHours(hours);
-  now.setUTCMinutes(minutes);
-  now.setUTCSeconds(0);
-  now.setUTCMilliseconds(0);
-
-  const localHours = now.getHours().toString().padStart(2, '0');
-  const localMinutes = now.getMinutes().toString().padStart(2, '0');
-
-  return `${localHours}:${localMinutes}`;
 }
 
 export function utcToLocalTime(utcTimeStr: string) {
@@ -62,4 +46,17 @@ export function utcToLocalTime(utcTimeStr: string) {
   if (localHours === 0) localHours = 12;  // midnight or noon fix
 
   return `${localHours}:${localMinutes} ${ampm}`;
+}
+export function utcToLocalTime24HoursFormat(utcTimeStr: string) {
+  const [hours, minutes] = utcTimeStr.split(':').map(Number);
+  const now = new Date();
+  now.setUTCHours(hours);
+  now.setUTCMinutes(minutes);
+  now.setUTCSeconds(0);
+  now.setUTCMilliseconds(0);
+
+  let localHours = now.getHours();
+  const localMinutes = now.getMinutes().toString().padStart(2, '0');
+
+  return `${localHours}:${localMinutes}`;
 }

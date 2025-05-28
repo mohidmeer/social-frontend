@@ -3,6 +3,7 @@ import { useEffect, useState } from "react";
 import { Button } from "../components/ui/button";
 import { apiService } from "../api/client";
 import ScheduleTime from "./ScheduleTime";
+import { utcToLocalTime24HoursFormat } from "../lib/utils";
 
 const EditScheduleForm = ({ schedule }: { schedule?: any }) => {
 
@@ -44,7 +45,7 @@ const EditScheduleForm = ({ schedule }: { schedule?: any }) => {
 
     const [days, time] = schedule.schedule?.split(",") || [];
     setInitialDays(Number(days));
-    setInitialTime(time);
+    setInitialTime(utcToLocalTime24HoursFormat(time));
   }
 }, [schedulev, reset]);
 
