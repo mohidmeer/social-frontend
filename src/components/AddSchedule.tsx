@@ -12,21 +12,21 @@ import AddSocialAccounts from "./AddSocialAccounts";
 type SocialAccount = {
     _id: string;
     name: string;
-    platform:string;
-    pages:any;
-    avatar_url:string;
-  };
+    platform: string;
+    pages: any;
+    avatar_url: string;
+};
 
-  type page = {
+type page = {
     name: string,
-    picture:any,
-    id:string,
-    access_token:any;
+    picture: any,
+    id: string,
+    access_token: any;
 }
 
 const AddScheduleForm = () => {
 
-   
+
 
     const [accounts, setAccounts] = useState<SocialAccount[]>([])
     const [pages, setPages] = useState<page[]>([])
@@ -36,6 +36,7 @@ const AddScheduleForm = () => {
             apiService.getSocailAccounts()
                 .then((accounts) => {
                     setAccounts(accounts);
+                    console.log(accounts);
                 })
                 .catch((err) => {
                     console.error('Failed to fetch social accounts:', err);
@@ -71,25 +72,25 @@ const AddScheduleForm = () => {
 
         const tid = toast.loading("Saving ....")
 
-            setLoading(true);
+        setLoading(true);
 
-            try {
-                const response = await apiService.AddSchedule(data);
+        try {
+            const response = await apiService.AddSchedule(data);
 
-                if (response.success) {
-                    toast.update(tid, { render: "Added Schedule successfully", type: "success", isLoading: false, autoClose: 1000 });
-                    document.getElementById('close-dialog')?.click();
-                    window.location.reload();
+            if (response.success) {
+                toast.update(tid, { render: "Added Schedule successfully", type: "success", isLoading: false, autoClose: 1000 });
+                document.getElementById('close-dialog')?.click();
+                window.location.reload();
 
-                } else {
-                    throw new Error("Failed to add schedule.");
-                }
-            } catch (error: any) {
-                toast.update(tid, { render: "Error occured while saving schedule", type: "error", isLoading: false, autoClose: 1000 });
-
-            } finally {
-                setLoading(false);
+            } else {
+                throw new Error("Failed to add schedule.");
             }
+        } catch (error: any) {
+            toast.update(tid, { render: "Error occured while saving schedule", type: "error", isLoading: false, autoClose: 1000 });
+
+        } finally {
+            setLoading(false);
+        }
     }
 
 
@@ -162,8 +163,8 @@ const AddScheduleForm = () => {
                                             accounts.length > 0 && accounts.map((i, z) => (
                                                 <SelectItem className="flex  items-center gap-4  border" key={i._id} value={z.toString()}>
                                                     <div className="flex gap-2 items-center">
-                                                    <img src={i.avatar_url} className="size-6 rounded-full" />
-                                                    {i.name}
+                                                        <img src={i.avatar_url} className="size-6 rounded-full" />
+                                                        {i.name}
                                                     </div>
                                                     <span className="font-bold text-xs text-gray-600">{i.platform}</span>
                                                 </SelectItem>
@@ -191,44 +192,57 @@ const AddScheduleForm = () => {
                         </div>
                     </div>
 
+                    {/* FOR FACEBOOK ONLY */}
+                    {platform === 'facebook' ? (
+                        pages?.length === 0 ? (
+                            <>
+                                <div className="text-xs font-semibold text-destructive">
+                                    No Facebook Pages found. Please re-authorize the app with proper Page permissions if you're missing pages.
+                                </div>
+                                <input type="hidden" {...register("page_id", { required: "Page is Required" })} />
+                                {errors.page_id && (
+                                    <p className="text-xs mt-1 font-semibold text-red-500">
+                                        {errors.page_id.message as string}
+                                    </p>
+                                )}
+                            </>
+                        ) : (
+                            <div className="flex gap-2 flex-col">
+                                <label className="text-xs font-semibold">Pages</label>
+                                <Select
+                                    onValueChange={(value) => {
+                                        setValue("page_id", pages[Number(value)].id);
+                                        setValue("page_name", pages[Number(value)].name);
+                                        setValue("page_access_token", pages[Number(value)].access_token);
+                                        setValue("page_avatar", pages[Number(value)].picture.data.url);
+                                    }}
+                                >
+                                    <SelectTrigger className="w-full input-sm" data-error={!!errors.page_id}>
+                                        <SelectValue placeholder="Select connected pages" />
+                                    </SelectTrigger>
+                                    <SelectContent>
+                                        {pages.map((page, index) => (
+                                            <SelectItem key={index} value={index.toString()} className="flex gap-2 items-center">
+                                                <img src={page.picture.data.url} className="size-6 rounded-full" alt={page.name} />
+                                                {page.name}
+                                            </SelectItem>
+                                        ))}
+                                    </SelectContent>
+                                </Select>
 
-                    {/* ONLY FOR FACEWBOOK ACCOUNTS */}
-                    {
-                        platform == 'facebook' &&
-                        <div className="flex gap-2 flex-col">
-                            <label className="text-xs font-semibold">Pages</label>
-                            <Select onValueChange={(value) => {
-                                setValue("page_id", pages[Number(value)].id);
-                                setValue("page_name", pages[Number(value)].name);
-                                setValue("page_access_token", pages[Number(value)].access_token)
-                                setValue('page_avatar', pages[Number(value)].picture.data.url)
-                            }}>
-                                <SelectTrigger className="w-full input-sm" data-error={errors.page_id && true}>
-                                    <SelectValue placeholder={'Select connected pages'} />
-                                </SelectTrigger>
-                                <SelectContent>
-                                    {pages.map((i, z) => (
-                                        <SelectItem className="flex gap-2 items-center" key={z} value={z.toString()}>
-                                            <img src={i.picture.data.url} className="size-6 rounded-full" />
-                                            {i.name}
-                                        </SelectItem>
-                                    ))
-                                    }
-                                </SelectContent>
-                            </Select>
-                            <input type="hidden" {...register("page_id", { required: "Page is Required" })} />
-
-                            {errors.page_id && (
-                                <p className="text-xs mt-1 font-semibold text-red-500">
-                                    {errors.page_id.message as string}
-                                </p>
-                            )}
-                        </div>
-                    }
+                                <input type="hidden" {...register("page_id", { required: "Page is Required" })} />
+                                {errors.page_id && (
+                                    <p className="text-xs mt-1 font-semibold text-red-500">
+                                        {errors.page_id.message as string}
+                                    </p>
+                                )}
+                            </div>
+                        )
+                    ) : null}
 
 
-                    <ScheduleTime initialDays={95} initialTime=""  onUpdate={(v:any) => {
-                        setValue('schedule', v)   
+                    <ScheduleTime initialDays={95} initialTime="" onUpdate={(v: any) => {
+                        setValue('schedule', v)
                     }} />
                     <input type="hidden" {...register("schedule", { required: "Please choose both the schedule days and time to proceed." })} />
                     {errors.schedule && (
