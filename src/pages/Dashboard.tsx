@@ -52,7 +52,7 @@ const Dashboard = () => {
         <div className="p-10 ">
             <div className="max-w-6xl mx-auto shadow-xl p-4 border rounded-md">
                 <div className="flex justify-between items-center border-b pb-1">
-                    <Logo size={200} />
+                    <Logo size={50} textOrientation={'flex-row'} />
                     {/* <div className="flex items-center gap-1 font-bold">
                         <div className="size-6  bg-primary" />
                         Blog Flix

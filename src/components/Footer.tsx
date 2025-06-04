@@ -4,11 +4,13 @@ import { Link } from "react-router-dom";
 const Footer = () => {
   return (
     <footer className="bg-primary text-primary-foreground py-6 px-10 text-sm flex justify-between items-center">
-      <div></div>
-      <p>
-        <span className="font-semibold">Igent Works</span>, operated by <span className="font-semibold">Igent Holding LLC</span> — a U.S. registered company.
+      <div className="w-full"></div>
+      <p className="w-full  text-center">
+        <span className="text-sm ">
+        © {new Date().getFullYear()} Social Mint — Developed by IgentWorks, a subsidiary of Igent Holdings LLC.
+        </span>
       </p>
-      <div className="flex justify-center gap-2 mt-4 text-sm text-gray-500">
+      <div className="flex justify-center gap-2  text-sm text-gray-300 w-full">
         <Link to="/privacy-policy" >
           Privacy Policy
         </Link>

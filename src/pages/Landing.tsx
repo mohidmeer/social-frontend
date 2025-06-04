@@ -47,7 +47,7 @@ const Landing = () => {
     return (
         <>
             <nav className="border p-6 w-full flex items-center justify-between">
-                <Logo size={350} />
+                <Logo size={50} textOrientation={'flex-row'} />
                 <div></div>
                 <div className="flex gap-2">
                     <Link to={"/auth/login"} className={buttonVariants({ variant: "default" })}>
