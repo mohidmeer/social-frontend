@@ -18,7 +18,7 @@ const Terms = () => {
 
         <h2 className="text-3xl font-bold">1. Introduction and Acceptance of Terms</h2>
         <p className="mt-2">
-          Welcome to the services provided by Igent Holdings LLC and our affiliate Socail Mint (collectively referred to as &quot;Igent,&quot; &quot;we,&quot; &quot;our,&quot; or &quot;us&quot;). These Terms of Service (&quot;Terms&quot;) constitute a legally binding agreement between you and Igent regarding your use of our software, applications, websites, products, and services (collectively, the &quot;Services&quot;).
+          Welcome to the services provided by Igent Holdings LLC and our affiliate Social Mint (collectively referred to as &quot;Igent,&quot; &quot;we,&quot; &quot;our,&quot; or &quot;us&quot;). These Terms of Service (&quot;Terms&quot;) constitute a legally binding agreement between you and Igent regarding your use of our software, applications, websites, products, and services (collectively, the &quot;Services&quot;).
         </p>
         <p className="mt-2">
           By accessing or using our Services, you acknowledge that you have read, understood, and agree to be bound by these Terms. If you do not agree to these Terms, you must not access or use our Services. If you are accessing or using the Services on behalf of a company, organization, or other entity, you represent and warrant that you have the authority to bind that entity to these Terms, and &quot;you&quot; refers to both you and that entity.

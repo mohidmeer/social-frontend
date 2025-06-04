@@ -15,7 +15,7 @@ const Privacy = () => {
         </div>
 
         <p>
-          Igent Holdings LLC and our affiliate Socail Mint (&quot;we,&quot; &quot;our,&quot; or &quot;us&quot;) are committed to
+          Igent Holdings LLC and our affiliate Social Mint (&quot;we,&quot; &quot;our,&quot; or &quot;us&quot;) are committed to
           protecting your privacy. This Privacy Policy explains how we collect, use, disclose, and
           safeguard your information when you use our software services, visit our website, or
           interact with us in any way.
@@ -100,7 +100,7 @@ const Privacy = () => {
 
         <h3 className="text-2xl ">Affiliates</h3>
         <p>
-          We may share your information with our affiliate, Socail Mint, for purposes consistent
+          We may share your information with our affiliate, Social Mint, for purposes consistent
           with this Privacy Policy.
         </p>
 
@@ -205,7 +205,7 @@ const Privacy = () => {
         <h2 className="text-3xl font-bold ">Contact Us</h2>
         <p>
           If you have any questions, concerns, or requests related to your privacy or this policy, please contact us at <a href="mailto:contact@igentworks.com" className="underline text-blue-400">contact@igentworks.com</a>.
-          We’re here to help and value your trust in Socail Mint.
+          We’re here to help and value your trust in Social Mint.
         </p>
 
 
