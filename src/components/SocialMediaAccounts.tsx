@@ -1,9 +1,10 @@
 import { useEffect, useState } from "react";
 import { apiService } from "../api/client";
 import { Button } from "./ui/button";
-import { Trash } from "lucide-react";
-import AddSocialAccounts from "./AddSocialAccounts";
-import Modal from "./Modal";
+import { Facebook, Instagram, Trash } from "lucide-react";
+
+
+
 
 
 type SocialAccount = {
@@ -16,6 +17,13 @@ type SocialAccount = {
 
 
 const SocialMediaAccounts = () => {
+
+
+    async function connectSocial(provider:string){
+        const callback_url =  window.location.href
+        const res  = await apiService.SocailConnect(provider,callback_url)
+        window.location.href=res 
+    }
 
 
     const [accounts, setAccounts] = useState<SocialAccount[]>([])
@@ -45,9 +53,9 @@ const SocialMediaAccounts = () => {
     }, [search, accounts]);
 
 
-    const removeAccount = async (id:string) =>{
-         await apiService.DeleteSocialAccount(id)
-         window.location.reload()
+    const removeAccount = async (id: string) => {
+        await apiService.DeleteSocialAccount(id)
+        window.location.reload()
     }
 
 
@@ -80,7 +88,7 @@ const SocialMediaAccounts = () => {
                                         <span className="font-bold text-xs text-gray-600">{i.platform}</span>
                                     </div>
                                 </div>
-                                <Button size={'icon'} variant={'destructive'} onClick={()=>removeAccount(i._id)}>
+                                <Button size={'icon'} variant={'destructive'} onClick={() => removeAccount(i._id)}>
                                     <Trash />
                                 </Button>
 
@@ -89,11 +97,20 @@ const SocialMediaAccounts = () => {
                 }
 
             </div>
-            <Modal id="das-id" title={"Select social media platform"} content={<AddSocialAccounts />}>
+
+            <div className="flex flex-col gap-2">
+                <Button className="w-full items-center flex gap-2" onClick={()=>{connectSocial('facebook')}}>
+                    <Facebook size={72} /> Connect with Facebook
+                </Button>
+                <Button className="w-full items-center flex gap-2" onClick={()=>{connectSocial('instagram')}}>
+                    <Instagram size={72} /> Connect with Instagram
+                </Button>
+            </div>
+            {/* <Modal id="das-id" title={"Select social media platform"} content={<AddSocialAccounts />}>
                 <Button type="button" className="w-full">
                     Link Social Accounts
                 </Button>
-            </Modal>
+            </Modal> */}
 
         </div >
     )
