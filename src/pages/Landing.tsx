@@ -46,9 +46,14 @@ const features = [
 const Landing = () => {
     return (
         <>
-            <nav className="border p-6 w-full flex items-center justify-between">
+            <nav className="border p-6 w-full flex items-center justify-between" id="home" >
                 <Logo size={50} textOrientation={'flex-row'} />
-                <div></div>
+                <div className="font-semibold flex  gap-4">
+                    <a href={'/#home'}>Home</a>
+                    <a href={'/#features'}>Features</a>
+                    <a href={'/#how'}>How it works</a>
+                    <a href={'/#pricing'}>Pricing</a>
+                </div>
                 <div className="flex gap-2">
                     <Link to={"/auth/login"} className={buttonVariants({ variant: "default" })}>
                         Login
@@ -59,7 +64,7 @@ const Landing = () => {
                 </div>
             </nav>
             <main className="min-h-screen flex flex-col gap-20">
-                <section className="grid grid-cols-2 max-w-7xl mx-auto mt-10 min-h-[80vh]">
+                <section className="grid grid-cols-2 max-w-7xl mx-auto mt-10 min-h-[80vh]" >
                     <div className="max-w-6xl mx-auto px-6  flex flex-col gap-3  justify-center">
                         <h1 className="text-4xl md:text-6xl font-bold leading-tight">
                             Automate Your Social Media Like a Pro
@@ -80,7 +85,7 @@ const Landing = () => {
                 </section>
 
 
-                <section className="max-w-7xl mx-auto ">
+                <section className="max-w-7xl mx-auto " id="features">
                     <h2 className="text-5xl font-bold text-center">
                         Features
                     </h2>
@@ -136,7 +141,7 @@ function PricingAndDownload() {
 
                 </div>
                 {/* Pricing Box */}
-                <div className="p-10 rounded-xl shadow-lg ">
+                <div className="p-10 rounded-xl shadow-lg " id="pricing">
                     <h2 className="text-4xl font-bold mb-4 ">💰 Simple Pricing</h2>
                     <p className="text-lg mb-4">
                         Pay only for what you use, with no subscriptions or hidden fees.
@@ -159,7 +164,7 @@ function PricingAndDownload() {
 
 function HowitWorks() {
     return (
-        <section className="max-w-7xl mx-auto w-full ">
+        <section className="max-w-7xl mx-auto w-full " id="how">
             <h2 className="text-5xl font-bold text-center">
                 How it works
             </h2>

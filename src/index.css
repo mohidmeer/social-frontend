@@ -118,6 +118,11 @@
 
 @layer base {
 
+
+  html {
+    scroll-behavior: smooth;
+  }
+
   /* #auto-blogger {
     all: initial !important;
     font-family: inherit !important;
