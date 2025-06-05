@@ -47,7 +47,7 @@ const Landing = () => {
     return (
         <>
             <nav className="border p-6 w-full flex items-center justify-between" id="home" >
-                <Logo size={50} textOrientation={'flex-row'} />
+                <Logo size={40} textOrientation={'flex-row'} />
                 <div className="font-semibold flex  gap-4">
                     <a href={'/#home'}>Home</a>
                     <a href={'/#features'}>Features</a>
