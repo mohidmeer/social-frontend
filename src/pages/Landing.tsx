@@ -172,17 +172,18 @@ function HowitWorks() {
 
             <div className="grid grid-cols-2  my-20 gap-30">
                 <div className="flex items-center">
+                    <div>
+                        <h3 className="text-3xl font-bold mb-10">How to Schedule a Post in 6 Easy Steps</h3>
 
-                    <ul className="space-y-4 text-lg list-disc pl-5">
-                        <li><strong>Give your schedule a title</strong> for easy reference.</li>
-                        <li><strong>Describe your post</strong> — AI writes the caption & generate an image.</li>
-                        <li><strong>Connect</strong> your Facebook or Instagram account.</li>
-                        <li><strong>Pick the platform</strong> to post on.</li>
-                        <li><strong>Choose days & time</strong> for automatic posting.</li>
-                        <li><strong>Click “Submit”</strong> — we handle the rest.</li>
-
-                    </ul>
-
+                        <ul className="space-y-4 text-lg font-semibold list-disc pl-10 ">
+                            <li>Give your schedule a title for easy reference.</li>
+                            <li>Describe your post — AI writes the caption & generate an image.</li>
+                            <li>Connect your Facebook or Instagram account.</li>
+                            <li>Pick the platform to post on.</li>
+                            <li>Choose days & time for automatic posting.</li>
+                            <li>Click “Submit” — we handle the rest.</li>
+                        </ul>
+                    </div>
                 </div>
 
                 <div className="flex items-center justify-center relative">
@@ -197,11 +198,14 @@ function HowitWorks() {
                 </div>
                 <div className="flex items-center">
 
-                    <ul className="space-y-4 text-lg list-disc pl-5">
+                    <div>
+                    <h3 className="text-3xl font-bold mb-10">Manage Your Scheduled Posts</h3>
+                    <ul className="space-y-4 text-lg list-disc pl-10">
                         <li><strong>Manage all schedules</strong> easily from your dashboard.</li>
                         <li><strong>Edit or pause</strong> any post anytime.</li>
                         <li><strong>Delete</strong> schedules you no longer need.</li>
                     </ul>
+                    </div>
 
                 </div>
 
