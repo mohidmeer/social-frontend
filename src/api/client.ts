@@ -1,4 +1,5 @@
 import axios from 'axios';
+import { Schedule } from '../types';
 
 const axiosClient = axios.create({
     baseURL: `${import.meta.env.VITE_BACKEND_URL}`,
@@ -28,19 +29,30 @@ axiosClient.interceptors.request.use(
 
 export const apiService = {
     async Login(data: any) {
+        await new Promise(resolve => setTimeout(resolve, 500));
         try {
             const res = await axiosClient.post('/login', data)
-            return res.data
+            if (res.data.success){
+                return res.data
+            } else {
+                throw Error('An Error Occured')
+            }
         } catch (error) {
-            console.log(error)
+            throw new Error("Server Error Occured");
         }
     },
     async Register(data:any){
+        await new Promise(resolve => setTimeout(resolve, 500));
         try {
             const res = await axiosClient.post('/register', data)
-            return res.data
+            if (res.data.success){
+                return res.data
+            } else {
+                throw Error('An Error Occured')
+            }
+
         } catch (error) {
-            console.log(error)
+            throw Error('An Error Occured')
         }
 
     } ,
@@ -48,7 +60,7 @@ export const apiService = {
         try {
             const response = await axiosClient.get("/schedule");
 
-            console.log(response);
+            
 
             if (response.data.success && Array.isArray(response.data.schedules)) {
                 return response.data;
@@ -139,6 +151,7 @@ export const apiService = {
         }
     },
     async AddSchedule(data: any): Promise<{ success: boolean; message?: string }> {
+        await new Promise(resolve => setTimeout(resolve, 1000));
         try {
             const response = await axiosClient.post("/schedule", data, );
 
@@ -153,6 +166,7 @@ export const apiService = {
         }
     },
     async UpdateSchedule(id: string, data: any): Promise<{ success: boolean }> {
+        await new Promise(resolve => setTimeout(resolve, 1000));
         try {
             const response = await axiosClient.put(`/schedule/${id}`, data, );
     
@@ -181,6 +195,7 @@ export const apiService = {
         }
     },
     async SocailConnect(provider:string,callback_url:string){
+        await new Promise(resolve => setTimeout(resolve, 1000));
         try {
             const response = await axiosClient.get(`/socials/connect/${provider}?callback_url=${callback_url}`);
 
@@ -209,14 +224,90 @@ export const apiService = {
             throw new Error(error.response?.data?.message || "Failed to connect socail account");
             
         }
-    }
-}
+    },
+    async getHistory(query:string){
+        try {
+            const response = await axiosClient.get('/history?'+query);
+    
+            if (response.data.success) {
+                return response.data.historyData;
+            } else {
+                throw new Error("Invalid API response format.");
+            }
+        } catch (error: any) {
+            console.error("Error updating schedule:", error);
+            throw new Error(error.response?.data?.message || "Failed to update schedule.");
+        }
+    },
+    async DeleteHistory(id:string){
+        try {
+            const response = await axiosClient.delete('/history/'+id);
+    
+            if (response.data.success) {
+                return true;
+            } else {
+                false;
+                throw new Error("Invalid API response format.");
+            }
+        } catch (error: any) {
+            console.error("Error updating schedule:", error);
+            throw new Error(error.response?.data?.message || "Failed to update schedule.");
+        }
+    },
+    async getDashboardStats(){
+        try {
+            const response = await axiosClient.get('/dashboard');
+            if (response.data.success) {
+                return response.data;
+            } else {
+                throw new Error("Invalid API response format.");
+            }
+        } catch (error: any) {
+            console.error("Error updating schedule:", error);
+            throw new Error(error.response?.data?.message || "Failed to update schedule.");
+        }
+    },
+    async getUserSettings(){
+        try {
+            const response = await axiosClient.get('/settings');
+            if (response.data.success) {
+                return response.data.settings;
+            } else {
+                throw new Error("Invalid API response format.");
+            }
+        } catch (error: any) {
+            console.error("Error updating schedule:", error);
+            throw new Error(error.response?.data?.message || "Failed to update schedule.");
+        }
+    },
+    async updateSettings(data:any){
+        try {
+            await new Promise(resolve => setTimeout(resolve, 500));
+            const response = await axiosClient.post('/settings' ,data);
+            if (response.data.success) {
+                return response.data.settings;
+            } else {
+                throw new Error("Invalid API response format.");
+            }
+        } catch (error: any) {
+            console.error("Error updating settings:", error);
+            throw new Error(error.response?.data?.message || "Failed to updating settings.");
+        }
+    },
+    async updateUserPassword(data:any){
+        try {
 
+            await new Promise(resolve => setTimeout(resolve, 500));
+            const response = await axiosClient.post('/user' ,data);
+            if (response.data.success) {
+                return true;
+            } else {
+                return false
 
-interface Schedule {
-    _id: string; 
-    title: string; 
-    schedule: string; 
-    time: string;
-    active: boolean;
+            }
+        } catch (error: any) {
+            console.error("Error saving password:", error);
+            return false;
+        }
+    },
 }

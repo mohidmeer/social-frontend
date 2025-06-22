@@ -13,8 +13,13 @@ export function getUsername() {
   return JSON.parse(atob(token!.split(".")[1])).username; // Decode JWT payload
 
 }
+export function getUserEmail() {
 
+  const token = localStorage.getItem("social-api-auth-token")
 
+  return JSON.parse(atob(token!.split(".")[1])).email; // Decode JWT payload
+
+}
 
 export function localTimeToUtc(localtimeStr: string) {
   const [hours, minutes] = localtimeStr.split(':').map(Number);
@@ -29,7 +34,6 @@ export function localTimeToUtc(localtimeStr: string) {
 
   return `${utcHours}:${utcMinutes}`;
 }
-
 export function utcToLocalTime(utcTimeStr: string) {
   const [hours, minutes] = utcTimeStr.split(':').map(Number);
   const now = new Date();
@@ -59,4 +63,18 @@ export function utcToLocalTime24HoursFormat(utcTimeStr: string) {
   const localMinutes = now.getMinutes().toString().padStart(2, '0');
 
   return `${localHours}:${localMinutes}`;
+}
+
+export function getPlatformLogo(platform: string): string {
+  switch (platform.toLowerCase()) {
+    case 'facebook':
+      return '/images/facebooklogoprimary.png'
+    case 'instagram':
+      return '/images/instagram.png'
+    case 'twitter':
+    case 'x':
+      return '/images/xlogoprimary.png'
+    default:
+      return '/images/defaultlogoprimary.png'
+  }
 }

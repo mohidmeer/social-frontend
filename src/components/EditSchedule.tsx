@@ -4,6 +4,7 @@ import { Button } from "../components/ui/button";
 import { apiService } from "../api/client";
 import ScheduleTime from "./ScheduleTime";
 import { utcToLocalTime24HoursFormat } from "../lib/utils";
+import { toast } from "sonner";
 
 const EditScheduleForm = ({ schedule }: { schedule?: any }) => {
 
@@ -23,14 +24,22 @@ const EditScheduleForm = ({ schedule }: { schedule?: any }) => {
     }
   }, [schedule, reset]);
 
-  const onSubmit = async (data: any) => {
-
-    const res = await apiService.UpdateSchedule(schedule._id, data);
-
-    if (res.success) {
-      document.getElementById('update')?.click()
-      window.location.reload()
-    }
+  const onSubmit = (data: any) => {
+    toast.promise(
+      apiService.UpdateSchedule(schedule._id, data).then(res => {
+        if (res.success) {
+          document.getElementById('update')?.click();
+          window.location.reload();
+        } else {
+          throw new Error("Failed to update schedule.");
+        }
+      }),
+      {
+        loading: 'Updating...',
+        success: 'Schedule updated successfully!',
+        error: 'Failed to update schedule.',
+      }
+    );
   };
 
   const schedulev = getValues("schedule");
@@ -40,14 +49,14 @@ const EditScheduleForm = ({ schedule }: { schedule?: any }) => {
 
 
   useEffect(() => {
-  if (schedule) {
-    reset(schedule);
+    if (schedule) {
+      reset(schedule);
 
-    const [days, time] = schedule.schedule?.split(",") || [];
-    setInitialDays(Number(days));
-    setInitialTime(utcToLocalTime24HoursFormat(time));
-  }
-}, [schedulev, reset]);
+      const [days, time] = schedule.schedule?.split(",") || [];
+      setInitialDays(Number(days));
+      setInitialTime(utcToLocalTime24HoursFormat(time));
+    }
+  }, [schedulev, reset]);
 
 
 
@@ -72,21 +81,43 @@ const EditScheduleForm = ({ schedule }: { schedule?: any }) => {
             {errors.title && <p className="text-xs text-red-500">{errors.title.message as string}</p>}
           </div>
 
-          {/* Instructions */}
+          {/* Caption Instructions */}
           <div className="flex flex-col gap-1 w-full">
-            <label className="text-xs font-semibold">Instructions</label>
-            {errors.instructions && 'true'}
+            <label className="text-xs font-semibold">Caption Instructions</label>
             <textarea
-              data-error={errors.instructions && true}
-              className="input w-full input-sm"
-              placeholder="Enter instructions"
-              {...register("instructions", { required: "Instructions are required" })}
+              className={`input w-full input-sm `}
+              placeholder="e.g. Write in a friendly, beginner-friendly tone. Keep it informative and engaging. Use simple language and real-life examples where possible."
+              data-error={errors.caption_instructions && true}
+              cols={2}
+              {...register("caption_instructions", { required: "Caption instructions are required" })}
             />
-            {errors.instructions && <p className="text-xs text-red-500">{errors.instructions.message as string}</p>}
+            {errors.caption_instructions && (
+              <p className="text-xs mt-1 font-semibold text-red-500">
+                {errors.caption_instructions.message as string}
+              </p>
+            )}
           </div>
 
+          {/* Image Instructions */}
+          <div className="flex flex-col gap-1 w-full">
+            <label className="text-xs font-semibold">Image Instructions</label>
+            <textarea
+              className={`input w-full input-sm `}
+              placeholder="e.g. Write in a friendly, beginner-friendly tone. Keep it informative and engaging. Use simple language and real-life examples where possible."
+              data-error={errors.image_instructions && true}
+              cols={2}
+              {...register("image_instructions", { required: "Image instructions are required" })}
+            />
+            {errors.image_instructions && (
+              <p className="text-xs mt-1 font-semibold text-red-500">
+                {errors.image_instructions.message as string}
+              </p>
+            )}
+          </div>
+
+
           {
-            initialDays && 
+            initialDays &&
             <ScheduleTime initialDays={initialDays} initialTime={initialTime || ''} onUpdate={(v: any) => {
               setValue('schedule', v)
             }} />

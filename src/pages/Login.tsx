@@ -4,7 +4,8 @@ import { Link, useNavigate } from 'react-router-dom';
 import { Button } from '../components/ui/button';
 import Logo from '../components/Logo';
 import { apiService } from '../api/client';
-import { toast } from 'react-toastify';
+import { toast } from 'sonner';
+// import { toast } from 'react-toastify';
 
 
 const Login: React.FC = () => {
@@ -20,16 +21,23 @@ const Login: React.FC = () => {
     const { register, handleSubmit, formState: { errors } } = useForm();
 
     const onSubmit = async (data: object) => {
-        const tid = toast.loading("Loging In...")
-        const res = await apiService.Login(data)
-        if (res.success) {
-            toast.update(tid, { render: "Redirecting ..", type: "success", isLoading: false, autoClose: 500 });
-            localStorage.setItem("social-api-auth-token", res.token);
-            navigate('/dashboard')
-        } else {
-            toast.update(tid, { render: res.message, type: "error", isLoading: false, autoClose: 1000 });
-
-        }
+        toast.promise(
+            apiService.Login(data)
+                .then(res => {
+                    if (res.success) {
+                        localStorage.setItem("social-api-auth-token", res.token);
+                        navigate('/dashboard');
+                        return 'Redirecting...'; // this gets passed to toast as success
+                    } else {
+                        throw new Error(res.message || "Login failed");
+                    }
+                }),
+            {
+                loading: 'Logging In...',
+                success: (msg) => msg,
+                error: 'An Error Occurred',
+            }
+        );
     };
     return (
         <form className='flex-1 flex flex-col justify-center  items-center  ' onSubmit={handleSubmit(onSubmit)} >

@@ -2,20 +2,13 @@ import { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
 import { Button } from "../components/ui/button";
 import { apiService } from "../api/client";
-import { toast } from "react-toastify";
 import Modal from "./Modal";
-// import { Facebook, Instagram } from "lucide-react";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "./ui/select";
 import ScheduleTime from "./ScheduleTime";
-import AddSocialAccounts from "./AddSocialAccounts";
+import { SocialAccount } from "../types";
+import SocialMediaAccounts from "./SocialMediaAccounts";
+import { toast } from "sonner";
 
-type SocialAccount = {
-    _id: string;
-    name: string;
-    platform: string;
-    pages: any;
-    avatar_url: string;
-};
 
 type page = {
     name: string,
@@ -55,7 +48,8 @@ const AddScheduleForm = () => {
     } = useForm({
         defaultValues: {
             title: "",
-            instructions: "",
+            caption_instructions: "",
+            image_instructions: "",
             social_account_id: "",
             platform: "",
             page_id: "",
@@ -68,31 +62,24 @@ const AddScheduleForm = () => {
 
     const [loading, setLoading] = useState(false);
 
+
     const onSubmit = async (data: any) => {
-
-        const tid = toast.loading("Saving ....")
-
         setLoading(true);
-
-        try {
-            const response = await apiService.AddSchedule(data);
-
-            if (response.success) {
-                toast.update(tid, { render: "Added Schedule successfully", type: "success", isLoading: false, autoClose: 1000 });
+    
+        toast.promise(
+            apiService.AddSchedule(data).then(() => {
                 document.getElementById('close-dialog')?.click();
                 window.location.reload();
-
-            } else {
-                throw new Error("Failed to add schedule.");
+            }).finally(() => {
+                setLoading(false);
+            }),
+            {
+                loading: 'Saving...',
+                success: 'Added schedule successfully!',
+                error: 'Error occurred while saving schedule',
             }
-        } catch (error: any) {
-            toast.update(tid, { render: "Error occured while saving schedule", type: "error", isLoading: false, autoClose: 1000 });
-
-        } finally {
-            setLoading(false);
-        }
-    }
-
+        )
+    };
 
     const platform = watch('platform')
 
@@ -123,19 +110,36 @@ const AddScheduleForm = () => {
                         )}
                     </div>
 
-                    {/* Instructions */}
+                    {/* Caption Instructions */}
                     <div className="flex flex-col gap-1 w-full">
-                        <label className="text-xs font-semibold">Instructions</label>
+                        <label className="text-xs font-semibold">Caption Instructions</label>
                         <textarea
                             className={`input w-full input-sm `}
                             placeholder="e.g. Write in a friendly, beginner-friendly tone. Keep it informative and engaging. Use simple language and real-life examples where possible."
-                            data-error={errors.instructions && true}
+                            data-error={errors.caption_instructions && true}
                             cols={2}
-                            {...register("instructions", { required: "Instructions are required" })}
+                            {...register("caption_instructions", { required: "Caption instructions are required" })}
                         />
-                        {errors.instructions && (
+                        {errors.caption_instructions && (
                             <p className="text-xs mt-1 font-semibold text-red-500">
-                                {errors.instructions.message as string}
+                                {errors.caption_instructions.message as string}
+                            </p>
+                        )}
+                    </div>
+
+                    {/* Image Instructions */}
+                    <div className="flex flex-col gap-1 w-full">
+                        <label className="text-xs font-semibold">Image Instructions</label>
+                        <textarea
+                            className={`input w-full input-sm `}
+                            placeholder="e.g. Write in a friendly, beginner-friendly tone. Keep it informative and engaging. Use simple language and real-life examples where possible."
+                            data-error={errors.image_instructions && true}
+                            cols={2}
+                            {...register("image_instructions", { required: "Image instructions are required" })}
+                        />
+                        {errors.image_instructions && (
+                            <p className="text-xs mt-1 font-semibold text-red-500">
+                                {errors.image_instructions.message as string}
                             </p>
                         )}
                     </div>
@@ -145,7 +149,7 @@ const AddScheduleForm = () => {
 
                     <div className="flex gap-2 flex-col sm:flex-row justify-center  items-center ">
                         <div className="flex flex-col gap-1 w-full">
-                            <label className="text-xs font-semibold">Socail Account</label>
+                            <label className="text-xs font-semibold">Social Account</label>
                             <div className="flex gap-2 flex-col sm:flex-row justify-center  items-center">
                                 <Select
                                     onValueChange={(value) => {
@@ -156,7 +160,7 @@ const AddScheduleForm = () => {
                                     }}
                                 >
                                     <SelectTrigger className="w-full input-sm" data-error={errors.social_account_id && true}>
-                                        <SelectValue placeholder={'Select Socail Account'} />
+                                        <SelectValue placeholder={'Select Social Account'} />
                                     </SelectTrigger>
                                     <SelectContent>
                                         {
@@ -166,7 +170,7 @@ const AddScheduleForm = () => {
                                                         <img src={i.avatar_url} className="size-6 rounded-full" />
                                                         {i.name}
                                                     </div>
-                                                    <span className="font-bold text-xs text-gray-600">{i.platform}</span>
+                                                    <span className="font-bold text-xs text-gray-600 capitalize">{i.platform}</span>
                                                 </SelectItem>
                                             ))
                                         }
@@ -178,7 +182,7 @@ const AddScheduleForm = () => {
                                 <input type="hidden" {...register("social_account_id", { required: "Social Account Required" })} />
 
 
-                                <Modal id="das" title={"Select socail media platform"} content={<AddSocialAccounts />}>
+                                <Modal width="max-w-2xl" id="das" title={"Select social media platform"} content={<SocialMediaAccounts />}>
                                     <Button type="button">
                                         Link Social Accounts
                                     </Button>

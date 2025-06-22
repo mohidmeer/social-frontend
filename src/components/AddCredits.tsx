@@ -2,6 +2,7 @@ import React from "react";
 import { useForm } from "react-hook-form";
 import { Button } from "../components/ui/button";
 import { apiService } from "../api/client";
+import { toast } from "sonner";
 
 interface AddCreditsProps { }
 
@@ -16,25 +17,28 @@ const AddCredits: React.FC<AddCreditsProps> = () => {
     const [loading, setLoading] = React.useState(false); // Track loading state
     const [error, setError] = React.useState<string | null>(null); // Track error state
 
-    const onSubmit = async (data: { quantity: number }) => {
+   const onSubmit = (data: { quantity: number }) => {
+    setLoading(true);
+    setError(null);
 
-        setLoading(true);
-        setError(null);
-
-        try {
-            const response = await apiService.AddCredits(data);
-
-            if (response.success && response.stripe_checkout_url) {
-                window.location.href = response.stripe_checkout_url; // Redirect to Stripe URL
+    toast.promise(
+        apiService.AddCredits(data).then(res => {
+            if (res.success && res.stripe_checkout_url) {
+                window.location.href = res.stripe_checkout_url;
             } else {
                 throw new Error("Invalid API response format.");
             }
-        } catch (err: any) {
-            setError(err.message || "An error occurred. Please try again.");
-        } finally {
-            setLoading(false);
+        }),
+        {
+            loading: "Redirecting to Stripe...",
+            success: "Successfull",
+            error: (err) => {
+                setError(err.message || "An error occurred. Please try again.");
+                return "Failed to initiate checkout.";
+            },
         }
-    };
+    );
+};
 
     return (
         <form

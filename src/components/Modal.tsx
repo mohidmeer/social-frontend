@@ -37,9 +37,10 @@ interface ModalProps {
   title: string
   children: React.ReactNode
   content: React.ReactNode
+  width?:string
 }
 
-const Modal = ({ id = "close-dialog", title, children, content }: ModalProps) => {
+const Modal = ({ id = "close-dialog", title, children, content , width='max-w-lg' }: ModalProps) => {
   const [open, setOpen] = useState(false)
 
   return (
@@ -54,7 +55,7 @@ const Modal = ({ id = "close-dialog", title, children, content }: ModalProps) =>
           // onClick={() => setOpen(false)}
         >
           <div
-            className="bg-white p-6 rounded-lg max-w-lg w-11/12 shadow-lg relative"
+            className={`bg-white p-6 rounded-lg ${width} w-11/12 shadow-lg relative`}
             onClick={(e) => e.stopPropagation()}
           >
             <div className="flex justify-between items-center mb-4">
