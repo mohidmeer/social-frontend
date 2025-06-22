@@ -287,12 +287,7 @@ function ScheduleItemTable({ item, setSchedules, setRefresh }: { item: any, setS
       }, [animate]);
 
 
-    // animate && toast(
-    //     <div className="flex flex-col gap-1">
-    //         <p>Executing Schedule</p>
-    //         <p>{item.title}</p>
-    //     </div>
-    // )
+  
 
     return (
         <TableRow >
