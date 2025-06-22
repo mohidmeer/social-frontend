@@ -1,10 +1,10 @@
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { Schedule } from "../types";
 import { apiService } from "../api/client";
 import AddScheduleForm from "./AddSchedule";
 import Modal from "./Modal";
 import { Button } from "./ui/button";
-import { Edit, Pause, Play, Trash,  } from "lucide-react";
+import { Edit, Pause, Play, Trash, } from "lucide-react";
 import { getPlatformLogo, utcToLocalTime, utcToLocalTime24HoursFormat } from "../lib/utils";
 import EditScheduleForm from "./EditSchedule";
 import { HoverCard, HoverCardContent, HoverCardTrigger } from "./ui/hover-card";
@@ -37,7 +37,7 @@ const Schedules = () => {
             setLoadingSchedules(false);
         }
     };
-    useEffect(() => {    
+    useEffect(() => {
         fetchSchedules();
     }, [refresh]);
 
@@ -70,7 +70,7 @@ const Schedules = () => {
                 <TableBody>
                     {schedules.map((item) => (
 
-                        <ScheduleItemTable key={item._id} item={item}  setSchedules={setSchedules} setRefresh={setRefresh} />
+                        <ScheduleItemTable key={item._id} item={item} setSchedules={setSchedules} setRefresh={setRefresh} />
                     ))}
                 </TableBody>
             </Table>
@@ -231,10 +231,11 @@ function buildDateTime(timeStr: string) {
 
 
 
-function ScheduleItemTable({ item, setSchedules, setRefresh }: { item: any, setSchedules:any , setRefresh: any }) {
+function ScheduleItemTable({ item, setSchedules, setRefresh }: { item: any, setSchedules: any, setRefresh: any }) {
 
     const [animate, setAnimate] = useState(false);
-    useEffect(()=>{},[animate])
+    const toastRef = useRef<string | number | null>(null);
+    useEffect(() => { }, [animate])
     useEffect(() => {
         const timeStr = utcToLocalTime24HoursFormat(item.schedule.split(',')[1]);
         const timeOfSchedule = buildDateTime(timeStr);
@@ -250,12 +251,12 @@ function ScheduleItemTable({ item, setSchedules, setRefresh }: { item: any, setS
             }, delay);
         }
 
-        if (delay + 1500 > 0) {
+        if (delay + 10000 > 0) {
             timeout2 = setTimeout(() => {
                 console.log('🔄 Timeout 2 triggered — reloading');
-                setRefresh((prev:boolean)=>(!prev));
+                setRefresh((prev: boolean) => (!prev));
                 setAnimate(false);
-            }, delay + 15000);
+            }, delay + 60000);
         }
 
         return () => {
@@ -265,13 +266,33 @@ function ScheduleItemTable({ item, setSchedules, setRefresh }: { item: any, setS
 
     }, [item]);
 
+    useEffect(() => {
+        if (animate) {
+          toastRef.current = toast.loading(
+            <div className="flex flex-col gap-1">
+              <p>Executing Schedule</p>
+              <p>{item.title}</p>
+            </div>
+          );
+        } else if (toastRef.current) {
+          toast.success(
+            <div className="flex flex-col gap-1">
+              <p>Schedule Completed</p>
+              <p>{item.title}</p>
+            </div>,
+            { id: toastRef.current } // ✅ update existing toast
+          );
+          toastRef.current = null;
+        }
+      }, [animate]);
 
-    animate && toast.loading(
-    <div className="flex flex-col gap-1">
-       <p>Executing Schedule</p>
-       <p>{item.title}</p> 
-    </div>
-    )
+
+    // animate && toast(
+    //     <div className="flex flex-col gap-1">
+    //         <p>Executing Schedule</p>
+    //         <p>{item.title}</p>
+    //     </div>
+    // )
 
     return (
         <TableRow >
