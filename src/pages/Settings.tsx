@@ -167,9 +167,7 @@ async function onSubmit(data: Settings) {
 
 
     if (loading) {
-      return <div>
-        YES
-      </div>
+      return <></>
     }
 
   return (
