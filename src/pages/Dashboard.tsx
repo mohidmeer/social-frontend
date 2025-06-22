@@ -45,7 +45,6 @@ const Dashboard = () => {
                 setAccounts(data.connected_accounts)
                 setHistory(data.history)
                 setSchedules(data.schedules)
-                console.log(data.schedules)
             } catch {
                 console.error("Failed to fetch dashboard stats:")
             }

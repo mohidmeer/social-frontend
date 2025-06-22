@@ -4,20 +4,24 @@ import { Schedule } from '../types';
 const axiosClient = axios.create({
     baseURL: `${import.meta.env.VITE_BACKEND_URL}`,
     headers: { "Content-Type": "application/json"},
-    
 });
+
+
+
+
 
 // FIX 
 
 axiosClient.interceptors.request.use(
     (config) => {
         const token = localStorage.getItem("social-api-auth-token");
-
         if (token) {
             config.headers['Authorization'] = `Bearer ${token}`;
         } else {
             console.log("No token found, proceeding without Authorization header.");
         }
+
+        // return checkCache(config);
 
         return config;
     },
@@ -25,6 +29,15 @@ axiosClient.interceptors.request.use(
         return Promise.reject(error);
     }
 );
+
+
+// axiosClient.interceptors.response.use(
+//     (response) => {
+//       return saveToCache(response); 
+//     },
+//     (error) => Promise.reject(error)
+//   );
+
 
 
 export const apiService = {
@@ -90,13 +103,12 @@ export const apiService = {
             throw new Error(error.response?.data?.message || "Failed to delete schedule.");
         }
     },
+
+    // cache Exception
     async RunSchedule(id: string): Promise<{ success: boolean }> {
 
-       
         try {
             const response = await axiosClient.get(`/schedule/${id}/run`, );
-
-        
 
             if (response.data.success) {
                 return response.data;
@@ -108,6 +120,7 @@ export const apiService = {
             throw new Error(error.response?.data?.message || "Failed to delete schedule.");
         }
     },    
+    // cahce exception
     async StopSchedule(id: string): Promise<{ success: boolean }> {
 
        
@@ -195,6 +208,7 @@ export const apiService = {
         }
     },
     async SocailConnect(provider:string,callback_url:string){
+        // invalidate cache of getScoailAccounts
         await new Promise(resolve => setTimeout(resolve, 1000));
         try {
             const response = await axiosClient.get(`/socials/connect/${provider}?callback_url=${callback_url}`);
