@@ -251,7 +251,7 @@ function ScheduleItemTable({ item, setSchedules, setRefresh }: { item: any, setS
             }, delay);
         }
 
-        if (delay + 10000 > 0) {
+        if (delay + 1500 > 0) {
             timeout2 = setTimeout(() => {
                 console.log('🔄 Timeout 2 triggered — reloading');
                 setRefresh((prev: boolean) => (!prev));
