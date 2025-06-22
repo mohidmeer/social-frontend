@@ -234,6 +234,7 @@ function buildDateTime(timeStr: string) {
 function ScheduleItemTable({ item, setSchedules, setRefresh }: { item: any, setSchedules:any , setRefresh: any }) {
 
     const [animate, setAnimate] = useState(false);
+    useEffect(()=>{},[animate])
     useEffect(() => {
         const timeStr = utcToLocalTime24HoursFormat(item.schedule.split(',')[1]);
         const timeOfSchedule = buildDateTime(timeStr);
@@ -252,8 +253,8 @@ function ScheduleItemTable({ item, setSchedules, setRefresh }: { item: any, setS
         if (delay + 1500 > 0) {
             timeout2 = setTimeout(() => {
                 console.log('🔄 Timeout 2 triggered — reloading');
-                // window.location.reload();
-                setRefresh((prev:boolean)=>(!prev))
+                setRefresh((prev:boolean)=>(!prev));
+                setAnimate(false);
             }, delay + 15000);
         }
 
