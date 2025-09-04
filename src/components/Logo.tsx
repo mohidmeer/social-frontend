@@ -1,4 +1,8 @@
+
+
+
 const Logo = ({size=400 , textOrientation}:{size:number , textOrientation:string}) => {
+
   return (
     <div className={`flex ${textOrientation} gap-2 items-center`}>
         

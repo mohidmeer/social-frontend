@@ -23,30 +23,30 @@ const SocialMediaAccounts = () => {
                     <img src="/images/facebooklogoprimary.png" className="size-17 group-hover:scale-110 transition-all" />
                     <div className="border-t border-dashed  border-2 w-full mt-2" />
                     <p className="text-sm font-semibold text-center">
-                        Connect with <br /> Facebook
+                        Facebook
                     </p>
                 </button>
                 <button className="p-4 flex items-center flex-col gap-2 cursor-pointer border-dashed border-2 rounded-md group w-full h-full " onClick={() => { connectSocial('instagram') }}>
                     <img src="/images/instagram.png" className="size-17 group-hover:scale-110 transition-all" />
                     <div className="border-t border-dashed  border-2 w-full mt-2" />
                     <p className="text-sm font-semibold text-center">
-                        Connect with <br /> Instagram
+                        Instagram
                     </p>
                 </button>
-                <button className="p-4 flex items-center flex-col gap-2 cursor-pointer border-dashed border-2 rounded-md group w-full h-full ">
+                <button className="p-4 flex items-center flex-col gap-2 cursor-pointer border-dashed border-2 rounded-md group w-full h-full " onClick={() => { connectSocial('x') }}>
                     <img src="/images/xlogo.png" className="size-17 group-hover:scale-110 transition-all" />
                     <div className="border-t border-dashed  border-2 w-full mt-2" />
-                    <p className="text-sm font-semibold text-center">
-                        Connect with <br />  X  <br /> (formerly Twitter)
+                    <p className="text-sm font-semibold text-center whitespace-nowrap">
+                       X  <br /> (Formerly Twitter)
                     </p>
                 </button>
-                <button className="p-4 flex items-center flex-col gap-2 cursor-pointer border-dashed border-2 rounded-md group w-full h-full ">
-                    <img src="/images/pint.png" className="size-17 group-hover:scale-110 transition-all" />
+                {/* <button className="p-4 flex items-center flex-col gap-2 cursor-pointer border-dashed border-2 rounded-md group w-full h-full " onClick={() => { connectSocial('google') }}>
+                    <img src="/images/google.png" className="size-20 group-hover:scale-110 transition-all" />
                     <div className="border-t border-dashed  border-2 w-full mt-2" />
-                    <p className="text-sm font-semibold text-center">
-                        Connect with <br />  Pinterest
+                    <p className="text-sm font-semibold text-center whitespace-nowrap">
+                       Google Bussiness <br/> Profile
                     </p>
-                </button>
+                </button> */}
 
             </div>
 

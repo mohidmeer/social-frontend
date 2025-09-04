@@ -329,6 +329,32 @@ function ScheduleItemTable({ item, setSchedules, setRefresh }: { item: any, setS
                                     </div>
                                 </div>
                             )
+                        case 'x':
+                            return (
+                                <div className="flex items-center gap-2">
+                                    <img src={item.social_account_id.avatar_url} className="size-10 rounded-full" />
+                                    <div>
+                                        <p className="font-bold text-sm">{item.social_account_id.name}</p>
+                                        <div className="flex gap-1 items-center">
+                                            <img src={getPlatformLogo(item.platform)} className="size-4 " />
+                                            <p className="capitalize font-semibold">{item.platform}</p>
+                                        </div>
+                                    </div>
+                                </div>
+                            )
+                        case 'google':
+                            return (
+                                <div className="flex items-center gap-2">
+                                    <img src={item.social_account_id.avatar_url} className="size-10 rounded-full" />
+                                    <div>
+                                        <p className="font-bold text-sm">{item.social_account_id.name}</p>
+                                        <div className="flex gap-1 items-center">
+                                            <img src={getPlatformLogo(item.platform)} className="size-4 " />
+                                            <p className="capitalize font-semibold">{item.platform}</p>
+                                        </div>
+                                    </div>
+                                </div>
+                            )
                         default:
                             return <span>Unknown Platform</span>;
                     }

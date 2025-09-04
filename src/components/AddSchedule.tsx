@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { useForm } from "react-hook-form";
+import { Controller, useForm } from "react-hook-form";
 import { Button } from "../components/ui/button";
 import { apiService } from "../api/client";
 import Modal from "./Modal";
@@ -8,6 +8,8 @@ import ScheduleTime from "./ScheduleTime";
 import { SocialAccount } from "../types";
 import SocialMediaAccounts from "./SocialMediaAccounts";
 import { toast } from "sonner";
+import { Label } from "./ui/label";
+import { Switch } from "./ui/switch";
 
 
 type page = {
@@ -44,11 +46,14 @@ const AddScheduleForm = () => {
         handleSubmit,
         setValue,
         watch,
+        control,
         formState: { errors },
     } = useForm({
         defaultValues: {
             title: "",
             caption_instructions: "",
+            generate_image: true,
+            ai_image: true,
             image_instructions: "",
             social_account_id: "",
             platform: "",
@@ -56,7 +61,8 @@ const AddScheduleForm = () => {
             page_name: "",
             page_access_token: "",
             page_avatar: "",
-            schedule: ""
+            schedule: "",
+
         },
     });
 
@@ -65,7 +71,7 @@ const AddScheduleForm = () => {
 
     const onSubmit = async (data: any) => {
         setLoading(true);
-    
+
         toast.promise(
             apiService.AddSchedule(data).then(() => {
                 document.getElementById('close-dialog')?.click();
@@ -82,6 +88,8 @@ const AddScheduleForm = () => {
     };
 
     const platform = watch('platform')
+    const generate_image = watch('generate_image')
+    const ai_image = watch('ai_image')
 
 
 
@@ -127,22 +135,76 @@ const AddScheduleForm = () => {
                         )}
                     </div>
 
-                    {/* Image Instructions */}
+                    {/* GENERATE IMAGE AS WELL */}
                     <div className="flex flex-col gap-1 w-full">
-                        <label className="text-xs font-semibold">Image Instructions</label>
-                        <textarea
-                            className={`input w-full input-sm `}
-                            placeholder="e.g. Write in a friendly, beginner-friendly tone. Keep it informative and engaging. Use simple language and real-life examples where possible."
-                            data-error={errors.image_instructions && true}
-                            cols={2}
-                            {...register("image_instructions", { required: "Image instructions are required" })}
+                        <Controller
+                            key={'generate_image'}
+                            name={'generate_image'}
+                            control={control}
+                            render={({ field: controllerField }) => (
+                                <div className="flex flex-row items-center justify-between rounded-lg border p-3 shadow-sm">
+                                    <div className="space-y-0.5">
+                                        <Label className="font-semibold text-xs">Generate Image</Label>
+                                        {/* <p className="text-xs font-semibold text-primary/70 ">Toggle this on to automatically generate an image based on your content instructions. Turn it off if you want to skip the image</p> */}
+                                    </div>
+                                    <Switch
+                                        checked={controllerField.value}
+                                        onCheckedChange={controllerField.onChange}
+                                    />
+                                </div>
+                            )}
                         />
-                        {errors.image_instructions && (
-                            <p className="text-xs mt-1 font-semibold text-red-500">
-                                {errors.image_instructions.message as string}
-                            </p>
-                        )}
                     </div>
+
+                    {/* AI GENERATED IMAGE OR CUSTOM IMAGE */}
+                    {
+                        generate_image &&
+                        <div className="flex flex-col gap-1 w-full">
+                            <Controller
+                                key={'ai_image'}
+                                name={'ai_image'}
+                                control={control}
+                                render={({ field: controllerField }) => (
+                                    <div className="flex flex-row items-center justify-between rounded-lg border p-3 shadow-sm">
+                                        <div className="space-y-0.5">
+                                            <Label className="font-semibold text-xs">AI Generated Image </Label>
+                                            <p className="text-xs font-semibold text-primary/70 ">Use AI to auto-generate an image, or disable to write a custom prompt.</p>
+                                        </div>
+                                        <Switch
+                                            checked={controllerField.value}
+                                            onCheckedChange={controllerField.onChange}
+                                        />
+                                    </div>
+                                )}
+                            />
+                        </div>
+                    }
+
+                    {/* Image Instructions are based on  generate image is true if not then we dont*/}
+                    {
+                        generate_image &&
+                        !ai_image &&
+                        <div className="flex flex-col gap-1 w-full">
+                            <label className="text-xs font-semibold">Custom Image Prompt</label>
+                            <textarea
+                                className={`input w-full input-sm `}
+                                placeholder="e.g. Write in a friendly, beginner-friendly tone. Keep it informative and engaging. Use simple language and real-life examples where possible."
+                                data-error={errors.image_instructions && true}
+                                cols={2}
+                                {...register("image_instructions", { required: "Image instructions are required" })}
+                            />
+                            {errors.image_instructions && (
+                                <p className="text-xs mt-1 font-semibold text-red-500">
+                                    {errors.image_instructions.message as string}
+                                </p>
+                            )}
+                        </div>
+
+
+
+                    }
+
+
 
 
 

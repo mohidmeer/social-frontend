@@ -73,7 +73,9 @@ export function getPlatformLogo(platform: string): string {
       return '/images/instagram.png'
     case 'twitter':
     case 'x':
-      return '/images/xlogoprimary.png'
+      return '/images/xlogo.png'
+    case 'google':
+      return '/images/google.png'
     default:
       return '/images/defaultlogoprimary.png'
   }

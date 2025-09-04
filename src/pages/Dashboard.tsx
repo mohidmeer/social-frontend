@@ -213,6 +213,20 @@ const Dashboard = () => {
                                                                 </div>
                                                             </div>
                                                         )
+                                                        
+                                                    case 'x':
+                                                        return (
+                                                            <div className="flex items-center gap-2">
+                                                                <img src={(item.social_account_id as SocialAccount).avatar_url}className="size-8 rounded-full" />
+                                                                <div>
+                                                                    <p className="font-bold text-sm">{(item.social_account_id as SocialAccount).name}</p>
+                                                                    <div className="flex gap-1 items-center">
+                                                                        <img src={getPlatformLogo(item.platform)} className="size-4 " />
+                                                                        <p className="capitalize font-semibold">{item.platform}</p>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        )
                                                     default:
                                                         return <span>Unknown Platform</span>;
                                                 }

@@ -152,7 +152,7 @@ const History = () => {
                         <TableHead>Account</TableHead>
                         <TableHead>Caption Instructions</TableHead>
                         <TableHead>Image Instructions</TableHead>
-                        <TableHead>Generated Caption</TableHead>
+                        <TableHead>Generated Post</TableHead>
                         <TableHead>Time </TableHead>
                         <TableHead>Status</TableHead>
                         <TableHead>Actions</TableHead>
