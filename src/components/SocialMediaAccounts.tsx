@@ -37,16 +37,20 @@ const SocialMediaAccounts = () => {
                     <img src="/images/xlogo.png" className="size-17 group-hover:scale-110 transition-all" />
                     <div className="border-t border-dashed  border-2 w-full mt-2" />
                     <p className="text-sm font-semibold text-center whitespace-nowrap">
-                       X  <br /> (Formerly Twitter)
+                        X  <br /> (Formerly Twitter)
                     </p>
                 </button>
-                {/* <button className="p-4 flex items-center flex-col gap-2 cursor-pointer border-dashed border-2 rounded-md group w-full h-full " onClick={() => { connectSocial('google') }}>
+                <button
+                    disabled
+                    
+                    className="relative p-4 flex items-center flex-col gap-2 border-dashed border-2 rounded-md group w-full h-full opacity-35"
+                >
                     <img src="/images/google.png" className="size-20 group-hover:scale-110 transition-all" />
-                    <div className="border-t border-dashed  border-2 w-full mt-2" />
+                    <div className="border-t border-dashed border-2 w-full mt-2" />
                     <p className="text-sm font-semibold text-center whitespace-nowrap">
-                       Google Bussiness <br/> Profile
+                        Google Business <br /> Profile
                     </p>
-                </button> */}
+                </button>
 
             </div>
 
